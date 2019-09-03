@@ -1,11 +1,21 @@
 
 import { Observable as Rx } from "rxjs";
 
-import { addMessage } from './utils';
+import { addMessage, printMessage } from './utils';
 
-const observable = Rx.create((observer: any) => {
+const obs = Rx.create((observer: any) => {
   observer.next('Primer mensaje');
   observer.next('Segundo mensaje');
 })
 
-observable.subscribe((x:any)=> addMessage(x))
+obs.subscribe(
+  (x: any) => addMessage(x),
+  () => addMessage('Se presentô un error'),
+  () => printMessage('Mensaje completo', 'complete')
+)
+
+obs.subscribe(
+  (x: any) => addMessage(x, true),
+  () => addMessage('Se presentô un error'),
+  () => printMessage('Mensaje completo', 'complete')
+)
