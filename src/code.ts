@@ -6,9 +6,12 @@ import { addMessage, printMessage } from './utils';
 const obs = Rx.create((observer: any) => {
   observer.next('Primer mensaje');
   observer.next('Segundo mensaje');
+  setInterval(() => {
+    observer.next('Nuevo mensaje');
+  },2000);
 })
 
-obs.subscribe(
+const observer1 = obs.subscribe(
   (x: any) => addMessage(x),
   () => addMessage('Se presentô un error'),
   () => printMessage('Mensaje completo', 'complete')
@@ -19,3 +22,5 @@ obs.subscribe(
   () => addMessage('Se presentô un error'),
   () => printMessage('Mensaje completo', 'complete')
 )
+
+setTimeout(() => observer1.unsubscribe(), 5000);
