@@ -6,16 +6,19 @@ import { addMessage, printMessage } from './utils';
 const obs = Rx.create((observer: any) => {
   observer.next('Primer mensaje');
   observer.next('Segundo mensaje');
+  // observer.error('Error en subscripción'); // TODO show complete
+  // observer.complete('Complete')
+  // observer.next('Tercer mensaje');
 })
 
 obs.subscribe(
   (x: any) => addMessage(x),
-  () => addMessage('Se presentô un error'),
+  (e: any) => printMessage(e),
   () => printMessage('Mensaje completo', 'complete')
 )
 
 obs.subscribe(
   (x: any) => addMessage(x, true),
-  () => addMessage('Se presentô un error'),
+  (e: any) => printMessage(e),
   () => printMessage('Mensaje completo', 'complete')
 )
