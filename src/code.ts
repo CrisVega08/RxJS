@@ -13,14 +13,14 @@ const obs = Rx.create((observer: any) => {
 
 const observer1 = obs.subscribe(
   (x: any) => addMessage(x),
-  () => addMessage('Se presentô un error'),
+  (e: any) => printMessage(e),
   () => printMessage('Mensaje completo', 'complete')
 )
 
 obs.subscribe(
   (x: any) => addMessage(x, true),
-  () => addMessage('Se presentô un error'),
+  (e: any) => printMessage(e),
   () => printMessage('Mensaje completo', 'complete')
 )
 
-setTimeout(() => observer1.unsubscribe(), 5000);
+// setTimeout(() => observer1.unsubscribe(), 5000);
