@@ -7,9 +7,9 @@ function addMessage(x: any, second?: boolean){
   ul.appendChild(node);
 }
 
-function printMessage(message: any, type: any){
+function printMessage(message: any, type?: any){
   const el = document.createElement('p');
-  el.className = type;
+  el.className = type || 'error';
   el.innerText = message;
   document.body.appendChild(el);
 }
