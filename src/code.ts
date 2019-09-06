@@ -23,4 +23,5 @@ obs.subscribe(
   () => printMessage('Mensaje completo', 'complete')
 )
 
-// setTimeout(() => observer1.unsubscribe(), 5000);
+// TODO use add method
+// setTimeout(() => observer1.unsubscribe(), 5000); // TODO unsubscribe
