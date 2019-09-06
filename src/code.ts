@@ -1,5 +1,5 @@
-import { interval } from 'rxjs';
-import { addMessage } from './utils';
+import { interval, from } from 'rxjs';
+import { addMessage, printMessage } from './utils';
  
 const observable1 = interval(400);
 const observable2 = interval(300);
@@ -13,3 +13,14 @@ setTimeout(() => {
   // Unsubscribes BOTH subscription and childSubscription
   subscription.unsubscribe();
 }, 3000);
+
+
+// const observable = from([10, 20, 30]);
+const observable = from([
+  {name: 'Cris', last: 'Vega'},
+  {name: 'Henricito', last: 'Rojas'},
+  {name: 'Simba', last: 'Ceballos'}
+]);
+const subs = observable.subscribe(x => printMessage(x.name, 'complete'));
+// Later:
+subs.unsubscribe();
