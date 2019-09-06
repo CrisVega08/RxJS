@@ -1,27 +1,15 @@
+import { interval } from 'rxjs';
+import { addMessage } from './utils';
+ 
+const observable1 = interval(400);
+const observable2 = interval(300);
+ 
+const subscription = observable1.subscribe(x => addMessage(`first: ${x}`));
+const childSubscription = observable2.subscribe(x => addMessage(`second: ${x}`, true))
 
-import { Observable as Rx } from "rxjs";
-
-import { addMessage, printMessage } from './utils';
-
-const obs = Rx.create((observer: any) => {
-  observer.next('Primer mensaje');
-  observer.next('Segundo mensaje');
-  setInterval(() => {
-    observer.next('Nuevo mensaje');
-  },2000);
-})
-
-const observer1 = obs.subscribe(
-  (x: any) => addMessage(x),
-  (e: any) => printMessage(e),
-  () => printMessage('Mensaje completo', 'complete')
-)
-
-obs.subscribe(
-  (x: any) => addMessage(x, true),
-  (e: any) => printMessage(e),
-  () => printMessage('Mensaje completo', 'complete')
-)
-
-// TODO use add method
-// setTimeout(() => observer1.unsubscribe(), 5000); // TODO unsubscribe
+subscription.add(childSubscription);
+ 
+setTimeout(() => {
+  // Unsubscribes BOTH subscription and childSubscription
+  subscription.unsubscribe();
+}, 3000);
