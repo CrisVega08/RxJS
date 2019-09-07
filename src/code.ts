@@ -1,27 +1,12 @@
-import { Observable } from 'rxjs';
-import { share } from 'rxjs/operators';
-import { addMessage, printMessage } from './utils';
+import { fromEvent } from 'rxjs';
+import { map, throttleTime } from 'rxjs/operators';
 
-const obs = Observable.create((observer: any) => {
-  observer.next('Primer mensaje');
-  observer.next('Segundo mensaje');
-  setInterval(() => {
-    observer.next('Nuevo mensaje');
-  },2000);
-})
+import { printMessage } from './utils';
 
-const observer1 = obs.subscribe(
-  (x: any) => addMessage(x),
-  (e: any) => printMessage(e),
-  () => printMessage('Mensaje completo', 'complete')
+const hotObs = fromEvent(document, 'mousemove').pipe(
+  map((event: any) => event.clientX),
+  throttleTime(3000)
 )
 
-obs.subscribe(
-  (x: any) => addMessage(x, true),
-  (e: any) => printMessage(e),
-  () => printMessage('Mensaje completo', 'complete')
-)
-
-setTimeout(() => {
-  const coldObs = obs.subscribe((x: any) => addMessage(`${x} Observer 3`))
-}, 3000);
+hotObs.subscribe((x: any) => printMessage(x, 'complete'))
+// setTimeout(() => hotObs.subscribe((x: any) => printMessage(x)), 1000)
