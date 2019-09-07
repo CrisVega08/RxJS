@@ -1,9 +1,9 @@
 
-import { Observable as Rx } from "rxjs";
+import { Observable } from "rxjs";
 
 import { addMessage } from './utils';
 
-const observable = Rx.create((observer: any) => {
+const observable = new Observable((observer: any) => {
   observer.next('Primer mensaje');
   observer.next('Segundo mensaje');
 })
