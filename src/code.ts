@@ -1,12 +1,19 @@
-import { fromEvent } from 'rxjs';
-import { map, throttleTime } from 'rxjs/operators';
+import { Subject } from "rxjs";
+import { addMessage } from './utils';
+const subject = new Subject<string>();
 
-import { printMessage } from './utils';
-
-const hotObs = fromEvent(document, 'mousemove').pipe(
-  map((event: any) => event.clientX),
-  throttleTime(3000)
+subject.subscribe(
+    x => addMessage(x),
+    e => addMessage(e),
+    () => addMessage('Complete')
 )
 
-hotObs.subscribe((x: any) => printMessage(x, 'complete'))
-// setTimeout(() => hotObs.subscribe((x: any) => printMessage(x)), 1000)
+subject.next('Primer mensaje emitido')
+
+const observerSub = subject.subscribe(
+    x => addMessage(x, true)
+)
+
+subject.next('Segundo mensaje emitido')
+observerSub.unsubscribe();
+subject.next('Tercer mensaje emitido')
