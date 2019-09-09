@@ -1,19 +1,19 @@
-import { Subject } from "rxjs";
+import { Subject, from } from "rxjs";
 import { addMessage } from './utils';
-const subject = new Subject<string>();
+const subject = new Subject<number>();
 
 subject.subscribe(
-    x => addMessage(x),
-    e => addMessage(e),
-    () => addMessage('Complete')
+  x => addMessage(x),
+  e => addMessage(e),
+  () => addMessage('Complete')
+);
+
+subject.subscribe(
+  x => addMessage(x, true),
+  e => addMessage(e),
+  () => addMessage('Complete', true)
 )
-
-subject.next('Primer mensaje emitido')
-
-const observerSub = subject.subscribe(
-    x => addMessage(x, true)
-)
-
-subject.next('Segundo mensaje emitido')
-observerSub.unsubscribe();
-subject.next('Tercer mensaje emitido')
+ 
+const observable = from([1, 2, 3]);
+ 
+observable.subscribe(subject); // You can subscribe providing a Subject
