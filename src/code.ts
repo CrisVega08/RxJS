@@ -1,7 +1,7 @@
 import { BehaviorSubject} from "rxjs";
 import { addMessage } from './utils';
 
-const subject = new BehaviorSubject('mensjae por defecto'); // 0 is the initial value
+const subject = new BehaviorSubject('mensjae por defecto');
  
 subject.subscribe(
   (x: any) => addMessage(`observerA: ${x}`)
