@@ -1,19 +1,15 @@
-import { Subject, from } from "rxjs";
+import { BehaviorSubject} from "rxjs";
 import { addMessage } from './utils';
-const subject = new Subject<number>();
 
+const subject = new BehaviorSubject('mensjae por defecto'); // 0 is the initial value
+ 
 subject.subscribe(
-  x => addMessage(x),
-  e => addMessage(e),
-  () => addMessage('Complete')
+  (x: any) => addMessage(`observerA: ${x}`)
 );
-
+ 
+subject.next('Primer mensaje');
+subject.next('Segundo mensaje');
+ 
 subject.subscribe(
-  x => addMessage(x, true),
-  e => addMessage(e),
-  () => addMessage('Complete', true)
-)
- 
-const observable = from([1, 2, 3]);
- 
-observable.subscribe(subject); // You can subscribe providing a Subject
+  (x: any) => addMessage(`observerB: ${x}`, true)
+);
