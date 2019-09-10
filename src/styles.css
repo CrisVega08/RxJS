@@ -47,3 +47,14 @@ li {
   height: 200px;
   display: flex;
 }
+
+#indication {
+  position: fixed;
+  width: 5px;
+  height: 7px;
+  background-color: #FF566E;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  z-index: 1;
+}
